@@ -167,6 +167,26 @@ fun MainScreen() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                Text(
+                    text = "Nkemjika Obi",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    text = "301275091",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+        }
+
+
     }
 }
 
