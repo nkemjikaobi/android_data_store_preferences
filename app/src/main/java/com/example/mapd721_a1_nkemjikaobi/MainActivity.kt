@@ -3,8 +3,11 @@ package com.example.mapd721_a1_nkemjikaobi
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -109,36 +112,62 @@ fun MainScreen() {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        // save button
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(start = 16.dp, end = 16.dp),
-            onClick = {
 
-            },
-        )
-        {
-            // button text
-            Text(
-                text = "Save",
-                color = Color.White,
-                fontSize = 18.sp
-            )
-        }
+       Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center){
+           Button(
+               modifier = Modifier
+                   .padding(start = 16.dp, end = 16.dp),
+               onClick = {
+
+               },
+           )
+           {
+               // button text
+               Text(
+                   text = "Load",
+                   color = Color.White,
+                   fontSize = 18.sp
+               )
+           }
+
+           // save button
+           Button(
+               modifier = Modifier
+                   .padding(start = 16.dp, end = 16.dp),
+               onClick = {
+
+               },
+           )
+           {
+               // button text
+               Text(
+                   text = "Save",
+                   color = Color.White,
+                   fontSize = 18.sp
+               )
+           }
+
+           // clear button
+           Button(
+               modifier = Modifier
+                   .padding(start = 16.dp, end = 16.dp),
+               onClick = {
+
+               },
+           )
+           {
+               // button text
+               Text(
+                   text = "Clear",
+                   color = Color.White,
+                   fontSize = 18.sp
+               )
+           }
+       }
 
         Spacer(modifier = Modifier.height(20.dp))
 
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)
