@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,7 +81,7 @@ fun MainScreen() {
     var username by remember { mutableStateOf( "") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var isLoaded by remember { mutableStateOf( false ) }
+    var isLoaded by rememberSaveable { mutableStateOf( false ) }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -176,7 +177,7 @@ fun MainScreen() {
                    //launch the class in a coroutine scope
                    scope.launch {
                        dataStore.saveDetails(username, email, password)
-//                       isLoaded =  true
+                       isLoaded =  true
                        Toast.makeText(context, "Details saved", Toast.LENGTH_SHORT).show()
                    }
                },
