@@ -117,7 +117,7 @@ fun MainScreen() {
            Button(
                modifier = Modifier
                    .padding(start = 16.dp, end = 16.dp),
-               onClick = {
+           onClick = {
 
                },
            )
