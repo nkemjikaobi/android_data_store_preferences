@@ -1,6 +1,7 @@
 package com.example.mapd721_a1_nkemjikaobi
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -94,7 +95,10 @@ fun MainScreen() {
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
             value = if (isLoaded) savedUsernameState.value ?: "" else username,
-            onValueChange = { username = it },
+            onValueChange = {
+                username = it
+                isLoaded =  false
+                            },
         )
 
         //Email Label
@@ -112,7 +116,9 @@ fun MainScreen() {
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
             value = if (isLoaded) savedEmailState.value ?: "" else email,
-            onValueChange = { email = it },
+            onValueChange = { email = it
+                isLoaded =  false
+            },
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -122,7 +128,9 @@ fun MainScreen() {
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
             value = if (isLoaded) savedPassState.value ?: "" else password,
-            onValueChange = { password = it },
+            onValueChange = { password = it
+                isLoaded =  false
+            },
             label = { Text(text = "Password", color = Color.Gray, fontSize = 12.sp) },
             visualTransformation = PasswordVisualTransformation()
         )
@@ -135,7 +143,8 @@ fun MainScreen() {
                    .padding(start = 16.dp, end = 16.dp),
            onClick = {
                 isLoaded = true
-               },
+               Toast.makeText(context, "Details loaded", Toast.LENGTH_SHORT).show()
+           },
            )
            {
                // button text
@@ -154,7 +163,8 @@ fun MainScreen() {
                    //launch the class in a coroutine scope
                    scope.launch {
                        dataStore.saveDetails(username, email, password)
-                       isLoaded =  true
+//                       isLoaded =  true
+                       Toast.makeText(context, "Details saved", Toast.LENGTH_SHORT).show()
                    }
                },
            )
@@ -176,6 +186,10 @@ fun MainScreen() {
                    scope.launch {
                        dataStore.deleteDetails()
                        isLoaded = false
+                       username = ""
+                       email = ""
+                       password = ""
+                       Toast.makeText(context, "Details deleted", Toast.LENGTH_SHORT).show()
                    }
                },
            )
