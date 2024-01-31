@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mapd721_a1_nkemjikaobi.datastore.StoreUserDetails
 import com.example.mapd721_a1_nkemjikaobi.ui.theme.MAPD721A1NkemjikaObiTheme
 import kotlinx.coroutines.launch
 
@@ -56,10 +58,24 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+    // context
+    val context = LocalContext.current
+
+    // scope
+    val scope = rememberCoroutineScope()
+
+    // datastore
+    val dataStore = StoreUserDetails(context)
+
+    // get saved username, email and password
+    val savedUsernameState = dataStore.getUsername.collectAsState(initial = "")
+    val savedEmailState = dataStore.getEmail.collectAsState(initial = "")
+    val savedPassState = dataStore.getPassword.collectAsState(initial = "")
 
     var username by remember { mutableStateOf( "") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isLoaded by remember { mutableStateOf( false ) }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -77,8 +93,8 @@ fun MainScreen() {
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
-            value = username,
-            onValueChange = {  },
+            value = if (isLoaded) savedUsernameState.value ?: "" else username,
+            onValueChange = { username = it },
         )
 
         //Email Label
@@ -95,8 +111,8 @@ fun MainScreen() {
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
-            value = email,
-            onValueChange = {  },
+            value = if (isLoaded) savedEmailState.value ?: "" else email,
+            onValueChange = { email = it },
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -105,8 +121,8 @@ fun MainScreen() {
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(),
-            value = password,
-            onValueChange = {  },
+            value = if (isLoaded) savedPassState.value ?: "" else password,
+            onValueChange = { password = it },
             label = { Text(text = "Password", color = Color.Gray, fontSize = 12.sp) },
             visualTransformation = PasswordVisualTransformation()
         )
@@ -118,7 +134,7 @@ fun MainScreen() {
                modifier = Modifier
                    .padding(start = 16.dp, end = 16.dp),
            onClick = {
-
+                isLoaded = true
                },
            )
            {
@@ -135,7 +151,11 @@ fun MainScreen() {
                modifier = Modifier
                    .padding(start = 16.dp, end = 16.dp),
                onClick = {
-
+                   //launch the class in a coroutine scope
+                   scope.launch {
+                       dataStore.saveDetails(username, email, password)
+                       isLoaded =  true
+                   }
                },
            )
            {
@@ -152,7 +172,11 @@ fun MainScreen() {
                modifier = Modifier
                    .padding(start = 16.dp, end = 16.dp),
                onClick = {
-
+                   //launch the class in a coroutine scope
+                   scope.launch {
+                       dataStore.deleteDetails()
+                       isLoaded = false
+                   }
                },
            )
            {
