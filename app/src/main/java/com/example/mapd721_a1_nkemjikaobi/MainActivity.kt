@@ -30,8 +30,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,6 +83,15 @@ fun MainScreen() {
     var isLoaded by remember { mutableStateOf( false ) }
 
     Column(modifier = Modifier.fillMaxSize()) {
+
+        Text(modifier = Modifier
+            .padding(16.dp, top = 30.dp),
+            text = "Contact Details",
+            color =  Color.DarkGray,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.ExtraBold,
+            textDecoration = TextDecoration.Underline
+        )
 
         //Username Label
         Text(
@@ -205,10 +218,11 @@ fun MainScreen() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Bottom
         ) {
             Column(
                 verticalArrangement = Arrangement.Bottom
